@@ -15,6 +15,7 @@
 # 4. Migrate: py manage.py migrate
 # 5. Create Super User: py manage.py createsuperuser
 # 6. Create 5 apps: py manage.py startapp <<app name>>
+#           a. User    b. Movie    c.Recommendation  d.Review  e.Collection
 # 7. Add Models (On the apps)
 # 8. Migrate
 # 9. Add Apps to settings.py
