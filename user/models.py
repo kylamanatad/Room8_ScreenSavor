@@ -12,7 +12,7 @@ class User(models.Model):
 class Follows(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_set')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers_set')
-    follow_date = models.DateTimeField(null=False)
+    follow_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('follower', 'following')
