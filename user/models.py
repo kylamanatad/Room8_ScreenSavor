@@ -3,7 +3,7 @@ from movie.models import Movie
 
 
 class User(models.Model):
-    user_id = models.IntegerField(primary_key=True, null=False)
+    user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=128, null=False)
     firstname = models.CharField(max_length=128, null=False)
     lastname = models.CharField(max_length=128, null=False)

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Screen Savor</h1>
+    </header>
+    <h1> User Registration</h1>
+    <form method="POST" action="">
+        {%csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Register</button>
+    </form>
+
+</body>
+</html>
