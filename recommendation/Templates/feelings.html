@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How are you today?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        #header-container {
+            background-color: #3B3B6C;
+            width: 700px;
+            padding: 3px; /* Adjust padding as needed */
+            display: inline-block;
+            margin-bottom: 30px; /* Reduced margin to make it closer */
+        }
+
+        #question-container {
+            text-align: center;
+        }
+
+        .options-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .option-box:hover {
+            background-color: #5d5d87;
+        }
+
+        .option-box {
+            cursor: pointer;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: calc((600px - 40px) / 3);
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #393953;
+        }
+
+        .option-box img {
+            width: 180px; /* Increase the width of the images */
+            height: 180px; /* Increase the height of the images */
+            margin: 0 auto;
+        }
+
+        .option-box p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .option-box.clicked {
+            background-color: #56567d;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Add vertical gap between the boxes and the button */
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px; /* Add margin to the top of the button */
+            width: 150px; /* Set the width to 600px */
+            text-align: center; /* Center the text within the button */
+            font-size: 20px; /* Set the font size to 20 pixels */
+        }
+
+        a:hover {
+            background-color: #56567d; /* Change background color on hover */
+            border-color: #56567d;
+        }
+
+
+    </style>
+    {% load static %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="question-container">
+        <div id="header-container">
+            <h1>How are you today?</h1>
+        </div>
+
+        <div class="options-container">
+            <div class="option-box" id="box-happy" onclick="selectImage('happy')">
+                <img src="{% static 'images/happy.png' %}" alt="Happy">
+                <p>Happy</p>
+            </div>
+
+            <div class="option-box" id="box-neutral" onclick="selectImage('neutral')">
+                <img src="{% static 'images/neutral.png' %}" alt="Neutral">
+                <p>Neutral</p>
+            </div>
+
+            <div class="option-box" id="box-sad" onclick="selectImage('sad')">
+                <img src="{% static 'images/sad.png' %}" alt="Sad">
+                <p>Sad</p>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+
+        <div class="button-container">
+            <a href="genre.html" onclick="return nextPage()">Next</a>
+        </div>
+
+
+    </div>
+
+    <script>
+    let selectedOption = null;
+
+        function selectImage(option) {
+            // Only update the selected option if it's not already selected
+            if (selectedOption !== option) {
+                selectedOption = option;
+
+                // Remove 'clicked' class from all boxes
+                const boxes = document.querySelectorAll('.option-box');
+                boxes.forEach(box => box.classList.remove('clicked'));
+
+                // Add 'clicked' class to the selected box
+                const selectedBox = document.getElementById(`box-${option}`);
+                if (selectedBox) {
+                    selectedBox.classList.add('clicked');
+                }
+            }
+            document.getElementById('error-message').innerText = '';
+        }
+
+        function nextPage() {
+            if (selectedOption === null) {
+                document.getElementById('error-message').innerText = 'Please select one option.';
+                return false; // Stop execution if no option is selected
+            } else {
+                // Redirect to the occasion.html page
+                window.location.href = "{% url 'recommendation:occasion' %}";
+                return false; // Stop the default behavior of the anchor tag
+            }
+        }
+
+</script>
+
+
+</body>
+</html>

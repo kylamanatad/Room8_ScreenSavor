@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Occasion</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        #occasion-container {
+            text-align: center;
+        }
+
+        .occasion-option {
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            width: 600px;
+            height: 15px; /* Increased height for better vertical alignment */
+            box-sizing: border-box;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Center text vertically */
+        }
+
+        .occasion-option:hover {
+            background-color: #5d5d87;
+        }
+
+        .occasion-option input {
+            display: none; /* Hide the actual radio button */
+        }
+
+        .occasion-option.selected {
+            background-color: #56567d;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Add vertical gap between the boxes and the button */
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px; /* Add margin to the top of the button */
+            text-align: center; /* Center the text within the button */
+            font-weight: bold; /* Make the font bold */
+            font-size: 20px; /* Set the font size to 20 pixels */
+        }
+
+        a:hover {
+            background-color: #56567d; /* Change background color on hover */
+            border-color: #56567d;
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="occasion-container">
+        <h1>What comes closest to your occasion?</h1>
+
+        <div class="occasion-option" onclick="selectOption(this)">
+            Just watching a movie by myself.
+            <input type="hidden" name="occasion" value="alone">
+        </div>
+
+        <div class="occasion-option" onclick="selectOption(this)">
+            Movie Date.
+            <input type="hidden" name="occasion" value="date">
+        </div>
+
+        <div class="occasion-option" onclick="selectOption(this)">
+            Movie Night with friends.
+            <input type="hidden" name="occasion" value="friends">
+        </div>
+
+        <div class="occasion-option" onclick="selectOption(this)">
+            Date Night with boyfriend or girlfriend.
+            <input type="hidden" name="occasion" value="date_night">
+        </div>
+
+        <div class="occasion-option" onclick="selectOption(this)">
+            Watching a movie with family or relatives.
+            <input type="hidden" name="occasion" value="family">
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+
+        <div class="button-container">
+            <a href="#" onclick="nextPage()">Next</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedOption = null;
+
+        function selectOption(option) {
+            // Only update the selected option if it's not already selected
+            if (selectedOption !== option) {
+                selectedOption = option;
+
+                // Remove 'selected' class from all options
+                const options = document.querySelectorAll('.occasion-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+
+                // Add 'selected' class to the clicked option
+                option.classList.add('selected');
+            }
+            document.getElementById('error-message').innerText = '';
+        }
+
+        function nextPage() {
+            if (selectedOption === null) {
+                document.getElementById('error-message').innerText = 'Please select one option.';
+                return false; // Stop execution if no option is selected
+            } else {
+                // Redirect to the genre.html page
+                window.location.href = "{% url 'recommendation:genre' %}";
+                return false; // Stop the default behavior of the anchor tag
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!-- templates/recommendation/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Screensavor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px; /* Set the font size to 28 pixels */
+        }
+
+        input {
+            width: calc(100% - 20px);
+            margin: 8px 0; /* Adjusted margin-top and margin-bottom for larger gap */
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #393953;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        label {
+            display: inline-block;
+            text-align: left;
+            width: calc(100% - 20px);
+            margin-top: 10px; /* Reduced margin-bottom for labels */
+            font-size: 16px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Add vertical gap between the boxes and the button */
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px; /* Add margin to the top of the button */
+            width: 150px; /* Set the width to 600px */
+            text-align: center; /* Center the text within the button */
+            font-size: 20px; /* Set the font size to 20 pixels */
+        }
+
+        a:hover {
+            background-color: #56567d; /* Change background color on hover */
+            border-color: #56567d;
+        }
+
+    </style>
+</head>
+<body>
+    <form method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <h1>Create Account</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Input your username" onfocus="clearErrorMessage()">
+
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" placeholder="Input your email" onfocus="clearErrorMessage()">
+
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Input your first name" onfocus="clearErrorMessage()">
+
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Input your last name" onfocus="clearErrorMessage()">
+
+        <label for="password">Password</label>
+        <!-- Add 'onfocus' attribute to clear error message when the input receives focus -->
+        <input type="password" id="password" name="password" placeholder="Input your password" onfocus="clearErrorMessage()">
+
+        <!-- Move the error message below the password input -->
+        <p id="error-message" style="color: red;"></p>
+
+        <div class="button-container">
+            <!-- Update the 'href' attribute to '#' -->
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    <script>
+        function validateForm() {
+            console.log('Submitting form...');
+
+            const firstName = document.getElementById('first_name').value.trim();
+            const lastName = document.getElementById('last_name').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Check if any of the required fields are empty
+            if (!firstName || !lastName || !username || !email) {
+                console.log('Fields are not filled.');
+                return false;
+            }
+
+            // Allow the form submission if all checks pass
+            console.log('Submitting form...');
+            return true;
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Movie Release Year</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        #year-container {
+            text-align: center;
+        }
+
+        .year-option {
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            width: 600px;
+            height: 15px; /* Increased height for better vertical alignment */
+            box-sizing: border-box;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Center text vertically */
+        }
+
+        .year-option:hover {
+            background-color: #5d5d87;
+        }
+
+        .year-option input {
+            display: none; /* Hide the actual radio button */
+        }
+
+        .year-option.selected {
+            background-color: #56567d;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Add vertical gap between the boxes and the button */
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px; /* Add margin to the top of the button */
+            width: 150px; /* Set the width to 600px */
+            text-align: center; /* Center the text within the button */
+            font-size: 20px; /* Set the font size to 20 pixels */
+        }
+
+        a:hover {
+            background-color: #56567d; /* Change background color on hover */
+            border-color: #56567d;
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="year-container">
+        <h1>How old would you like the movie to be?</h1>
+
+        <div class="year-option" onclick="selectOption(this)">
+            Doesn’t matter.
+            <input type="hidden" name="year" value="any">
+        </div>
+
+        <div class="year-option" onclick="selectOption(this)">
+            Published in the last 3 years.
+            <input type="hidden" name="year" value="3">
+        </div>
+
+        <div class="year-option" onclick="selectOption(this)">
+            Published in the last 5 years.
+            <input type="hidden" name="year" value="5">
+        </div>
+
+        <div class="year-option" onclick="selectOption(this)">
+            Published in the last 10 years.
+            <input type="hidden" name="year" value="10">
+        </div>
+
+        <div class="year-option" onclick="selectOption(this)">
+            Published in the last 20 years.
+            <input type="hidden" name="year" value="20">
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+
+        <div class="button-container">
+            <a href="#" onclick="nextPage()">Next</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedOption = null;
+
+        function selectOption(option) {
+            // Only update the selected option if it's not already selected
+            if (selectedOption !== option) {
+                selectedOption = option;
+
+                // Remove 'selected' class from all options
+                const options = document.querySelectorAll('.year-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+
+                // Add 'selected' class to the clicked option
+                option.classList.add('selected');
+            }
+            document.getElementById('error-message').innerText = '';
+        }
+
+        function nextPage() {
+            if (selectedOption === null) {
+                document.getElementById('error-message').innerText = 'Please select one option.';
+                return false; // Stop execution if no option is selected
+            } else {
+                // Redirect to the rating.html page
+                window.location.href = "{% url 'recommendation:rating' %}";
+                return false; // Stop the default behavior of the anchor tag
+            }
+        }
+    </script>
+</body>
+</html>

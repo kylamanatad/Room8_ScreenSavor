@@ -1,14 +1,98 @@
+<!-- templates/recommendation/login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Screensavor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px; /* Set the font size to 28 pixels */
+        }
+
+        input {
+            width: calc(100% - 20px);
+            margin: 8px 0; /* Adjusted margin-top and margin-bottom for larger gap */
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+            color: #393953;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        label {
+            display: inline-block;
+            text-align: left;
+            width: calc(100% - 20px);
+            margin-top: 10px; /* Reduced margin-bottom for labels */
+            font-size: 16px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        a:hover {
+            background-color: #56567d;
+            border-color: #56567d;
+        }
+
+    </style>
 </head>
 <body>
-    <form>
-        {{form.as_p}}
-        <button type="submit">Login</button>
-    </form>
+    <form method="post">
+        {% csrf_token %}
+        <h1>Login</h1>
 
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Input your username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Input your password" required>
+
+        <div class="button-container">
+            <a href="feelings.html" onclick="return nextPage()">Next</a>
+        </div>
+    </form>
 </body>
 </html>

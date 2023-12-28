@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <!-- Add your CSS styles here -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            max-width: 100px; /* Adjust the size as needed */
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- Replace 'path/to/your/logo.png' with the actual path to your logo image -->
+            <img src="{% static 'images/logo.png' %}" alt="Neutral">
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Reviews</a>
+            <a href="#">Recommendation</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+</body>
+</html>

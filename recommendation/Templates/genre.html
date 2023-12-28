@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Genres</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */
+        #container::-webkit-scrollbar {
+            width: 0.5em;
+        }
+
+        #container::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+
+        #container::-webkit-scrollbar-track {
+            background-color: #393953;
+        }
+
+        #intro-container {
+            margin-bottom: 10px;
+        }
+
+        #info-container {
+            text-align: left;
+            font-size: 14px;
+            padding-bottom: 5px;
+        }
+
+        #genre-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .genre-box {
+            cursor: pointer;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 10px;
+            width: 300px;
+            height: 15px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .genre-box:hover {
+            background-color: #5d5d87;
+        }
+
+        .genre-box p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .genre-box.selected {
+            background-color: #56567d;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Style for the button container */
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Arrange buttons in a column */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            gap: 10px;
+            padding: 10px
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px; /* Add margin to the top of the button */
+            width: 150px; /* Set the width to 600px */
+            text-align: center; /* Center the text within the button */
+            font-weight: bold; /* Make the font bold */
+            font-size: 20px; /* Set the font size to 20 pixels */
+        }
+
+        a:hover {
+            background-color: #56567d; /* Change background color on hover */
+            border-color: #56567d;
+        }
+    </style>
+
+    {% load static %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="container">
+        <div id="intro-container">
+            <p style="font-size: 18px;">
+                <h1>Please choose any genre you’re interested in.</h1>
+            </p>
+        </div>
+
+        <div id="info-container">
+            Multiple answers are possible
+        </div>
+
+        <div id="genre-container">
+            <div class="genre-box" onclick="toggleGenre('Action')">
+                <p>Action</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Comedy')">
+                <p>Comedy</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Drama')">
+                <p>Drama</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Adventure')">
+                <p>Adventure</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Thriller')">
+                <p>Thriller</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Crime')">
+                <p>Crime</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Mystery')">
+                <p>Mystery</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Biography')">
+                <p>Biography</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('History')">
+                <p>History</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Animation')">
+                <p>Animation</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Music')">
+                <p>Music</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Sport')">
+                <p>Sport</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Romance')">
+                <p>Romance</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Science Fiction')">
+                <p>Science Fiction</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Fantasy')">
+                <p>Fantasy</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Family')">
+                <p>Family</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Disaster')">
+                <p>Disaster</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Western')">
+                <p>Western</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('War')">
+                <p>War</p>
+            </div>
+
+            <div class="genre-box" onclick="toggleGenre('Horror')">
+                <p>Horror</p>
+            </div>
+
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="button-container">
+            <a href="#" onclick="validateGenres()">Sign Up</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedGenres = [];
+
+        function toggleGenre(genre) {
+            const index = selectedGenres.indexOf(genre);
+            if (index === -1) {
+                selectedGenres.push(genre);
+            } else {
+                selectedGenres.splice(index, 1);
+            }
+            updateGenreBoxes();
+        }
+
+        function updateGenreBoxes() {
+            const boxes = document.querySelectorAll('.genre-box');
+            boxes.forEach(box => {
+                const genre = box.querySelector('p').innerText;
+                if (selectedGenres.includes(genre)) {
+                    box.classList.add('selected');
+                } else {
+                    box.classList.remove('selected');
+                }
+            });
+        }
+
+        function validateGenres() {
+            if (selectedGenres.length === 0) {
+                document.getElementById('error-message').innerText = 'Please choose at least one genre.';
+            } else {
+                // Proceed to the next page (year.html) or perform any other actions
+                window.location.href = "{% url 'recommendation:year' %}";
+            }
+        }
+
+        document.querySelectorAll('.genre-box').forEach(box => {
+            box.addEventListener('click', () => {
+                // Clear the error message when a genre box is clicked
+                document.getElementById('error-message').innerText = '';
+            });
+        });
+
+    </script>
+</body>
+</html>

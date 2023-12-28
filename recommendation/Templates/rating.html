@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Movie Ratings</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2B2B41, #0A0A18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        #rating-container {
+            text-align: center;
+        }
+
+        #intro-container {
+            margin-bottom: 10px;
+        }
+
+        #info-container {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .rating-option {
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            width: 600px;
+            height: 15px; /* Increased height for better vertical alignment */
+            box-sizing: border-box;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rating-option:hover {
+            background-color: #5d5d87;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option.selected {
+            background-color: #56567d;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        a:hover {
+            background-color: #56567d;
+            border-color: #56567d;
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="rating-container">
+        <div id="intro-container">
+            <p style="font-size: 18px;">
+                <h1>Please choose MPAA ratings you like.</h1>
+            </p>
+        </div>
+
+        <div id="info-container">
+            <p style="margin-left: 0;">Multiple answers are possible</p>
+        </div>
+
+        <div class="rating-option" onclick="selectOption(this)">
+            G-Rated: All ages admitted.
+            <input type="hidden" name="rating" value="G">
+        </div>
+
+        <div class="rating-option" onclick="selectOption(this)">
+            PG-Rated: Some material may not be suitable for children.
+            <input type="hidden" name="rating" value="PG">
+        </div>
+
+        <div class="rating-option" onclick="selectOption(this)">
+            PG-13-Rated: Some material may not be inappropriate for children under 13.
+            <input type="hidden" name="rating" value="PG-13">
+        </div>
+
+        <div class="rating-option" onclick="selectOption(this)">
+            R-Rated: Under 17 requires accompanying parent or adult guardian.
+            <input type="hidden" name="rating" value="R">
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="button-container">
+            <a href="#" onclick="nextPage()">Next</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedOption = null;
+
+        function selectOption(option) {
+            if (selectedOption !== option) {
+                selectedOption = option;
+                const options = document.querySelectorAll('.rating-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            }
+            document.getElementById('error-message').innerText = '';
+        }
+
+        function nextPage() {
+            if (selectedOption === null) {
+                document.getElementById('error-message').innerText = 'Please select one option.';
+                return false;
+            } else {
+                window.location.href = "{% url 'recommendation:recos' %}";
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
